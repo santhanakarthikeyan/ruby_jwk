@@ -1,5 +1,5 @@
 # RubyJwk
-Short description and motivation.
+Authenticate JWKs via public JWT enspoint
 
 ## Usage
 How to use my plugin.
