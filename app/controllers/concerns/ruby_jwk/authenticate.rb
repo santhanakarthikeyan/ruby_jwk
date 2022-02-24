@@ -1,7 +1,7 @@
 module RubyJwk
   module Authenticate
     def authenticate_tenant!
-      return if RubyJwk.skip_issuers.to_a.include?(payload[:iss])
+      return if RubyJwk.skip_issuers.to_a.include?(jwt_payload[:iss])
 
       JWT.decode(token, nil, true, { algorithm: 'RS256', jwks: jwk_loader})
     rescue JWT::DecodeError => e
@@ -12,6 +12,10 @@ module RubyJwk
       @jwt_payload ||= JWT.decode(token, nil, false).first
     rescue JWT::DecodeError => e
       render status: 401, json: error_response_template("Authentication failed! - #{e.message}")
+    end
+
+    def jwt_tenant_name
+      @jwt_payload.dig('tenant')
     end
 
     private
@@ -28,10 +32,6 @@ module RubyJwk
         res = HTTParty.get(RubyJwk.jwk_url.gsub(':tenant_name', tenant_name))
         res.code == 200 ? res.parsed_response : {}
       end
-    end
-
-    def tenant_name
-      @payload.fetch('tenant')
     end
 
     def error_response_template(msg)

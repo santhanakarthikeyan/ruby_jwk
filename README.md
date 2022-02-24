@@ -48,6 +48,11 @@ To get the JWT payload, use the following helper:
 jwt_payload
 ```
 
+To get tenant name from JWT, use the following helper:
+```ruby
+jwt_tenant_name
+```
+
 ### Token verification 
 Currently, we support below verifications
 * Signature
