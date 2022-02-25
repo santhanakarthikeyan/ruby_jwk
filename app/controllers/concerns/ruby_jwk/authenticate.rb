@@ -15,7 +15,7 @@ module RubyJwk
     end
 
     def jwt_tenant_name
-      @jwt_payload.dig('tenant')
+      jwt_payload.dig('tenant')
     end
 
     def jwt_token
