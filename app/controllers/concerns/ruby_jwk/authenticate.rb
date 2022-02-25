@@ -18,6 +18,12 @@ module RubyJwk
       @jwt_payload.dig('tenant')
     end
 
+    def jwt_token
+      return unless auth_header.starts_with?('Bearer ')
+
+      auth_header.to_s.gsub('Bearer ', '')
+    end
+
     private
 
     # invalidate becomes true when kid not found
@@ -47,12 +53,6 @@ module RubyJwk
 
     def auth_header
       request.headers['Authorization'].to_s
-    end
-
-    def token
-      return unless auth_header.starts_with?('Bearer ')
-
-      auth_header.to_s.gsub('Bearer ', '')
     end
   end
 end
