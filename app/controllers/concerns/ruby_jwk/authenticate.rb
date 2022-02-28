@@ -11,7 +11,7 @@ module RubyJwk
     def jwt_payload
       @jwt_payload ||= JWT.decode(jwt_token, nil, false).first
     rescue JWT::DecodeError => e
-      render status: 401, json: error_response_template("Authentication failed! - #{e.message}")
+      {}
     end
 
     def jwt_tenant_name
